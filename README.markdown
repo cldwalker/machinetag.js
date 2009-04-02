@@ -41,4 +41,7 @@ Plugin Methods
 * machineTagSearchRecordTags(wildcard\_machine\_tag, records): Returns tags from machine-tagged items that match the wildcard machine tag.
 * machineTagSearchLocation(options): Wrapper around machineTagSearch() which assumes wildcard is appended to the end of the url after a '#'
   ie http://example.com/tag\_search#wildcard .
+* hideMachineTags(): Assuming text of selector elements are machine tags, replaces them with a
+  hidden namespace and predicate and visible value. The hidden fields can be toggled visible with
+  toggleHiddenMachineTags().
 
