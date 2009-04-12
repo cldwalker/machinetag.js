@@ -39,13 +39,14 @@ The wildcard syntax should be compatible with [flickr's wildcard search](http://
 
 Machine Tag Tree Plugin
 =======================
-jquery.machineTagTree.js is an optional jquery plugin that complements jquery.machineTag.js. It provides a tree view for visualizing machine-tagged items that match a machine tag query.
+jquery.machineTagTree.js is a jquery plugin that complements jquery.machineTag.js by providing a tree view for machine-tagged items that match a machine tag query. It's main method, $.machineTagTree() depends on the [treeTable jQuery plugin](http://plugins.jquery.com/project/treeTable). The demo comes bundled with a treeTable version that works with this plugin. 
 
 Plugin API's
-==============
+============
 These are brief descriptions of the methods. Read a plugin's source for more documentation.
 
 jquery.machineTag.js provides the following methods:
+
 * $.machineTagSearch(wildcard\_machine\_tag, options): Returns machine-tagged items that match wildcard machine tag.
 * $.machineTagSearchRecordTags(wildcard\_machine\_tag, records): Returns tags from machine-tagged items that match the wildcard machine tag.
 * $.machineTagSearchLocation(options): Wrapper around machineTagSearch() which assumes wildcard is appended to the end of the url after a '#'
@@ -55,6 +56,7 @@ jquery.machineTag.js provides the following methods:
   $.toggleHiddenMachineTags().
 
 jquery.machineTagTree.js provides the following methods:
+
 * $.machineTagTree(wildcard\_machine\_tag, records, options): Given a wildcard machine tag and its matching records, displays the results in a tree table. Designed to be passed as a displayCallback to $.machineTagSearch(). Dependent on the jquery treeTable plugin.
 * $.createMachineTagTree(wildcard\_machine\_tag, records): Given a wildcard machine tag and its matching records, gives back an array of nodes to be displayed as a tree.  Designed to be passed as a displayCallback to $.machineTagSearch(). Not dependent on any plugins.
 
