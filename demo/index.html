@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Machine Tag Tree Demo</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <style type='text/css'>
+    .record_tags_column {
+      max-width: 200px;
+    }
+    </style>
+  </head>
+  <body>
+    
+<h2>Machine Tag Tree Demo</h2>
+<form action="javascript:void($.machineTagSearch($('#machine_tag_query').val()))">
+  <input type="text" name="machine_tag" id="machine_tag_query"/>
+  <input value="Machine Tag Search" type="submit"/>
+  <span id="machine_tag_search_status" style="display:none"> Searching ...</span>
+</form>
+<p/>
+<script type="text/javascript" src="javascripts/jquery.machineTag.js"></script>
+<script type="text/javascript" src="javascripts/jquery.machineTagTree.js"></script>
+<script type="text/javascript" src="javascripts/jquery.treeTable.js"></script>
+<link href="stylesheets/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/jquery.machineTagTree.css" rel="stylesheet" type="text/css" />
+
+<div id="tag_tree"></div>
+
+<script type="text/javascript" charset="utf-8">
+function toggleSearchStatus() { return $("#machine_tag_search_status").toggle();}
+$(function() {
+  $.machineTagTree.defaultOptions = {recordName: 'Posts'};
+  $.machineTagSearch.defaultOptions = {
+    jsonUrl: 'posts.json', beforeSearch: toggleSearchStatus, afterSearch: toggleSearchStatus, displayCallback: $.machineTagTree
+  };
+  $.machineTagSearchLocation();
+});
+</script>
+
+</body>
+</html>

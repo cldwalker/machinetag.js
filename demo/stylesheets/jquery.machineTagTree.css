@@ -1,0 +1,45 @@
+/* TABLE
+ * ========================================================================= */
+table {
+  border: 1px solid #888;
+  border-collapse: collapse;
+  line-height: 1;
+  margin: 1em auto;
+  width: 90%;
+}
+
+/* Caption
+ * ------------------------------------------------------------------------- */
+table caption, .caption {
+  font-size: 1.7em;
+  font-weight: bold;
+}
+
+/* Header
+ * ------------------------------------------------------------------------- */
+table thead {
+  background: #aaa url(../images/bg-table-thead.png) repeat-x top left;
+  font-size: .9em;
+}
+
+table thead tr th {
+  border: 1px solid #888;
+  font-weight: normal;
+  padding: .3em 1.0em .3em 1.0em;
+  text-align: left;
+}
+
+/* Body
+ * ------------------------------------------------------------------------- */
+table tbody tr td {
+  cursor: default;
+  border-right: 1px solid #888;
+  padding: .3em 1em;
+  font-size: .9em;
+}
+
+table span {
+  background-position: center left;
+  background-repeat: no-repeat;
+  padding: .2em 0 .2em 1.5em;
+}
