@@ -26,18 +26,20 @@
     return rows;
   };
 
-  // Given a wildcard machine tag and its matching records, displays the results in a tree table. The tree organizes the records by the machine
-  // tags that match the wildcard machine tag. The table has three columns: 
+  // Given a wildcard machine tag and its matching records, displays the results in a tree table. The tree organizes the records by the
+  // machine tags that match the wildcard machine tag. The table has three columns:
   //   * machine tags: displays machine tags that match wildcard and are the parent nodes in the tree
   //   * record: displays record info, leaf nodes in a tree
   //   * record tags: displays a record's machine tags
+  // If your records don't use the url attribute as the primary attribute, you can customize your output with the formatter option.
   // This function takes the following options:
   //   * recordName: capitalized name to give the records, defaults to Records
   //   * tagTreeId: css id for the div containing the generated table, defaults to tag_tree
   //   * tableId: css id for the generated table, defaults to machine_tag_table
   //   * caption : caption/title for the table
   //   * formatter : hash of columns to functions used to format the respective column,
-  //     hash keys are machine_tags_column, record_column, record_tags_column
+  //     ** hash keys are machine_tags_column, record_column, record_tags_column
+  //     ** record and record_tags columns expect a record object while machine tags column expects the row object
   $.machineTagTree = function(wildcard_machine_tag, records, options) {
     var options = $.extend({recordName: 'Records', tagTreeId: 'tag_tree', tableId: 'machine_tag_table', 
       wildcard_machine_tag: wildcard_machine_tag},$.machineTagTree.defaultOptions, options || {});
@@ -65,12 +67,12 @@
   };
 
   function createTable(rows, options) {
-    var options = $.extend({ recordName: 'Records', tableId: 'machine_tag_table', caption: 'Machine Tag Search Results', 
-      formatter: { record_column: recordColumnFormatter, record_tags_column: recordTagsColumnFormatter,
-      machine_tags_column: machineTagsColumnFormatter}
-      }, options || {});
+    var options = $.extend({ recordName: 'Records', tableId: 'machine_tag_table', caption: 'Machine Tag Search Results'}, options || {});
     if (options.wildcard_machine_tag) options.caption = options.recordName+" for wildcard machine tag '"+
       options.wildcard_machine_tag +"'";
+    options.formatter = $.extend(  { record_column: recordColumnFormatter, record_tags_column: recordTagsColumnFormatter,
+      machine_tags_column: machineTagsColumnFormatter}, options.formatter || {});
+
     var table = "<table id='"+options.tableId+"'><caption>"+options.caption+"</caption>\
     <thead>\
       <tr>\

@@ -1,7 +1,10 @@
 Description
 ===========
 These jQuery plugins provides machine-tag related methods, most importantly a machine
-tag search and a machine tag tree. For an introduction to machine tags, [read this](http://tagaholic.me/2009/03/26/what-are-machine-tags.html). To see a live version of the machine tag tree see [my blog's search engine](http://tagaholic.me/blog.html).
+tag search and a machine tag tree. For an introduction to machine tags, [read
+this](http://tagaholic.me/2009/03/26/what-are-machine-tags.html). To see a live version of a
+machine tag tree see [my blog's search engine](http://tagaholic.me/blog.html). A post about
+this plugin is [here](http://tagaholic.me/2009/04/14/i-am-machine-tag-and-so-can-you.html).
 
 Setup
 =====
@@ -54,6 +57,7 @@ jquery.machineTag.js provides the following methods:
 * $.hideMachineTags(): Assuming text of selector elements are machine tags, replaces them with a
   hidden namespace and predicate and visible value. The hidden fields can be toggled visible with
   $.toggleHiddenMachineTags().
+* $.machineTag(): Parses a machine tag into its namespace, predicate and value parts.
 
 jquery.machineTagTree.js provides the following methods:
 

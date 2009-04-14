@@ -9,13 +9,14 @@
     }
   };
   
-  // Returns machine-tagged items that match wildcard machine tag.
+  // Returns machine-tagged records/items that match wildcard machine tag.
   // These options have a global default with $.machineTagSearch.defaultOptions
   // Options: Either records or jsonUrl is required.
   //   * cacheJson: cache records from first json call, default is true
   //   * records: an array of machine-tagged records
   //   * jsonUrl: a json url which represents an array of machine-tagged records
   //   * beforeSearch: before search callback i.e. to display a spinner
+  //   * beforeJsonSearch: callback to manipulate json before it's searched, called after beforeSearch
   //   * afterSearch: after search callback i.e. to hide a spinner
   //   * displayCallback: display callback is passed wildcard machine tag + matching records
   $.machineTagSearch = function(wildcard_machine_tag, options) {
@@ -29,6 +30,7 @@
     }
     else if (options.jsonUrl) {
       $.getJSON(options.jsonUrl, function(json_records) {
+        if (options.beforeJsonSearch) json_records = options.beforeJsonSearch.call(this, json_records);
         cached_json_records = json_records;
         var matching_records = machineTagSearchBody(wildcard_machine_tag, json_records, options);
       });
@@ -46,7 +48,7 @@
 
   $.machineTagSearch.defaultOptions = {};
   
-  // Returns tags from machine-tagged items that match the wildcard machine tag.
+  // Returns tags from machine-tagged records that match the wildcard machine tag.
   $.machineTagSearchRecordTags = function(wildcard_machine_tag, records) {
     var machine_tags = [];
     $.each(records, function(i,e) {

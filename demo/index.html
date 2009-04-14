@@ -14,12 +14,15 @@
   <body>
     
 <h2>Machine Tag Tree Demo</h2>
+Some searches to try: post:*, gem:*, lib:*
 <form action="javascript:void($.machineTagSearch($('#machine_tag_query').val()))">
   <input type="text" name="machine_tag" id="machine_tag_query"/>
   <input value="Machine Tag Search" type="submit"/>
   <span id="machine_tag_search_status" style="display:none"> Searching ...</span>
 </form>
-<p/>
+<p> For an explanation of what you're seeing, read <a
+  href="http://tagaholic.me/2009/04/14/i-am-machine-tag-and-so-can-you.html"> my post</a>
+  on this plugin.</p>
 <script type="text/javascript" src="javascripts/jquery.machineTag.js"></script>
 <script type="text/javascript" src="javascripts/jquery.machineTagTree.js"></script>
 <script type="text/javascript" src="javascripts/jquery.treeTable.js"></script>
@@ -30,10 +33,14 @@
 
 <script type="text/javascript" charset="utf-8">
 function toggleSearchStatus() { return $("#machine_tag_search_status").toggle();}
+function convertRecords(records) {
+    return records.map( function(e){ return {title: e.title, url: "http://tagaholic.me"+e.url, tags: e.tags} });
+}
 $(function() {
   $.machineTagTree.defaultOptions = {recordName: 'Posts'};
   $.machineTagSearch.defaultOptions = {
-    jsonUrl: 'posts.json', beforeSearch: toggleSearchStatus, afterSearch: toggleSearchStatus, displayCallback: $.machineTagTree
+    jsonUrl: 'posts.json', beforeSearch: toggleSearchStatus, afterSearch: toggleSearchStatus, displayCallback: $.machineTagTree,
+    beforeJsonSearch: convertRecords
   };
   $.machineTagSearchLocation();
 });
