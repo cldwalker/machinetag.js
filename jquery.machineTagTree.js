@@ -24,7 +24,7 @@
       $.merge(rows, tag_rows);
     });
     return rows;
-  };
+  }
 
   // Given a wildcard machine tag and its matching records, displays the results in a tree table. The tree organizes the records by the
   // machine tags that match the wildcard machine tag. The table has three columns:
@@ -59,12 +59,19 @@
       setupTreeTable(rows);
       var table_html = createTable(rows, options);
       $("#"+options.tagTreeId).append(table_html);
-      $("a.machine_tag_search").hideMachineTags();
-      $("a.machine_tag_search").click(function() { $.machineTagSearch($(this).text());});
+      $("a.toggle_machine_tags").hideMachineTags();
       $("a.machine_tag_href_search").click(function() { $.machineTagSearch(this.href.match(/#(.*?)$/).pop());});
+      $("a#toggle_all_levels").click( function() {
+        // var toggle_level = 1 * $('#toggle_level').val();
+        var tr_selector = 'tr[level='+$('#toggle_level').val()+']';
+        // if (toggle_level <= 1) tr_selector += ',tr[level=2],tr[level=3]';
+        // if (toggle_level == 0) tr_selector += ',tr[level=1]';
+        $(tr_selector).each( function(){$(this).toggleBranch()} );
+        return false;
+      });
       $("#"+options.tableId).treeTable({initialState: "expanded", indent:15});
     }
-  };
+  }
 
   function createTable(rows, options) {
     var options = $.extend({ recordName: 'Records', tableId: 'machine_tag_table', caption: 'Machine Tag Search Results'}, options || {});
@@ -76,25 +83,25 @@
     var table = "<table id='"+options.tableId+"'><caption>"+options.caption+"</caption>\
     <thead>\
       <tr>\
-        <th width='140'>Machine Tags <a href='javascript:void($(\"tr[level=2]\").each(function(){$(this).toggleBranch()}))'>\
-        (Collapse/Expand)</a></th>\
-        <th>"+ options.recordName +"</th>\
-        <th>"+singularize(options.recordName)+" Tags / <a href='javascript:void($.toggleHiddenMachineTags())'>Machine Tags</a></th>\
+        <th class='machine_tags_column'>Machine Tags<br/><a href='javascript:return false' id='toggle_all_levels'>\
+        Toggle Level:</a> <input id='toggle_level' type='text' value='2' size='1'></th>\
+        <th class='records_column'>"+ options.recordName +"</th>\
+        <th class='record_tags_column'>"+singularize(options.recordName)+" Tags / <a href='javascript:void($.toggleHiddenMachineTags())'>Machine Tags</a></th>\
       </tr>\
     </thead><tbody>" +
     $.map(rows, function(e,i) {
       return "<tr id='"+ e.id + "'" + (typeof e.parent_id != 'undefined' ? " class='child-of-"+e.parent_id+"'" : '' ) +
         "level='"+e.level+"'>" +
-        "<td>"+(e.tag ? options.formatter.machine_tags_column.call(this, e) : '')+"</td>"+
-        "<td>"+(e.record ? options.formatter.record_column.call(this, e.record) : '')+"</td>" +
-        "<td>"+(e.record ? options.formatter.record_tags_column.call(this, e.record) : '')+"</td>" +
+        "<td class='machine_tags_column'>"+(e.tag ? options.formatter.machine_tags_column.call(this, e) : '')+"</td>"+
+        "<td class='records_column'>"+(e.record ? options.formatter.record_column.call(this, e.record) : '')+"</td>" +
+        "<td class='record_tags_column'>"+(e.record ? options.formatter.record_tags_column.call(this, e.record) : '')+"</td>" +
         "</tr>";
     }).join(" ") + "</tbody></table>";
     return table;
-  };
+  }
 
   function machineTagsColumnFormatter(row) {
-    var link_text = row.tag + (row.record_count ? " ("+row.record_count+")" : '');
+    var link_text = truncate(row.tag, 15) + (row.record_count ? " ("+row.record_count+")" : '');
     return "<a class='machine_tag_href_search' href='#" + machineTagQuery(row) + "'>"+ link_text + "</a>";
   }
 
@@ -103,18 +110,14 @@
   }
 
   function recordTagsColumnFormatter(record) {
-    return "<div class='record_tags_column'>"+createTagLinks(record.tags)+"</div>";
-  }
-
-  function createTagLinks(tags) {
-    return $.map(tags, function(f) {
-      return "<a class='machine_tag_search' href='#"+ f+"'>" + f + "</a>";
+    return $.map(record.tags, function(f) {
+      return "<a class='machine_tag_href_search toggle_machine_tags' href='#"+ f+"'>" + f + "</a>";
     }).join(', ');
-  };
+  }
 
   function singularize(string) {
     return string.replace(/s$/,'')
-  };
+  }
 
   function truncate(string,length) {
     return (string.length > length)  ? string.slice(0, length - 3) + '...' : string;
@@ -157,5 +160,5 @@
       }
     });
     return;
-  };
+  }
 })(jQuery);

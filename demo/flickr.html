@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Machine Tag Tree Demo</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <style type='text/css'>
+    .record_tags_column {
+      max-width: 200px;
+    }
+    </style>
+  </head>
+  <body>
+
+<h2>Flickr Machine Tag Tree Demo</h2>
+<p>
+<b>Instructions:</b>
+<span style="font-style: italic" id="instructions">
+  To use this machine tag tree you need a flickr user id. You can use <a
+    href="javascript:(function(){location.href="http://tagaholic.me/apps/flickr.html?user_id="+photostream_owner_nsid})()">this
+    bookmarklet</a> on a Flickr photostream  (<a href="http://www.flickr.com/photos/licciardi/">for
+    example</a>) or group pool to have it automatically filled for you. You can also get one with a
+  user name from <a href="http://idgettr.com/">idgettr</a>. Some user ids you can try: <a
+    href="javascript:void($('#flickr_user_id').val('33047461@N05'))">33047461@N05</a> (musicians)
+  and <a href="javascript:void($('#flickr_user_id').val('53755594@N00'))">53755594@N00</a> (places).
+</span>
+</p>
+
+<form action="javascript:void(flickrMachineTagSearch())">
+  <label>Flickr User Id: </label><input type="text" id="flickr_user_id" size="15"/><br/>
+  <label>Machine Tag: </label><input type="text" name="machine_tag" id="machine_tag_query"/>
+  <input value="Machine Tag Search" type="submit"/>
+  <span id="machine_tag_search_status" style="display:none"> Searching ...</span>
+</form>
+<p/>
+<script type="text/javascript" src="javascripts/jquery.machineTag.js"></script>
+<script type="text/javascript" src="javascripts/jquery.machineTagTree.js"></script>
+<script type="text/javascript" src="javascripts/jquery.treeTable.js"></script>
+<link href="stylesheets/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+<link href="stylesheets/jquery.machineTagTree.css" rel="stylesheet" type="text/css" />
+<style type='text/css'>
+  td img { width: 100% }
+  .records_column { min-width: 150px }
+</style>
+
+<div id="tag_tree"></div>
+
+<script type="text/javascript" charset="utf-8">
+function flickrMachineTagSearch(flickr_user_id) {
+  // 'http://api.flickr.com/services/feeds/groups_pool.gne?id=973956@N23&lang=en-us&format=json&jsoncallback=?',
+  var flickr_feed = "http://api.flickr.com/services/feeds/photos_public.gne?lang=en-us&format=json&id=";
+  flickr_feed += flickr_user_id || $('#flickr_user_id').val();
+  $.machineTagSearch( $('#machine_tag_query').val(), {jsonUrl: flickr_feed + '&jsoncallback=?', cacheJson: false})
+}
+
+function toggleSearchStatus() { return $("#machine_tag_search_status").toggle();}
+
+function convertFlickrRecords(json) {
+  return json.items.map( function(e){ return {title: e.title, url: e.link, media: e.media,
+    tags: $.grep(e.tags.split(" "), function(tag) {return tag.match(/:.*=/)}) }} )
+}
+
+function recordFormatter(record) {
+  if (record.media.m) {
+    var image_id = record.media.m.match(/\/([^\/]+).jpg/)[1];
+    var cell = " <a href='javascript:$(\"#"+image_id+"\").toggle(); void(0)'>"+record.title+"</a><p/>\
+      <a style='display:none' id='"+ image_id +"' href='"+ record.url +"'><img src='"+record.media.m+"'/></a></p>";
+  }
+  else {
+    var cell = "<a href='"+record.url+"'>"+record.title+"</a>";
+  }
+  return cell;
+}
+
+$(function() {
+  $.machineTagTree.defaultOptions = {recordName: 'Photos', formatter: {record_column: recordFormatter}, caption: 'All Photos'};
+  $.machineTagSearch.defaultOptions = {
+    beforeSearch: toggleSearchStatus, afterSearch: toggleSearchStatus, displayCallback: $.machineTagTree,
+    beforeJsonSearch: convertFlickrRecords
+  };
+  if (user_match = location.search.match(/user_id=([^&]+)/)) {
+    if (user_id = user_match[1]) flickrMachineTagSearch(user_id); $('#flickr_user_id').val(user_id);
+  }
+});
+</script>
+</body>
+</html>
