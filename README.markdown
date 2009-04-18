@@ -3,8 +3,8 @@ Description
 These jQuery plugins provides machine-tag related methods, most importantly a machine
 tag search and a machine tag tree. For an introduction to machine tags, [read
 this](http://tagaholic.me/2009/03/26/what-are-machine-tags.html). To see a live version of a
-machine tag tree see [my blog's search engine](http://tagaholic.me/blog.html) or a flickr
-app(http://tagaholic.me/apps/flickr.html). A post about this plugin is
+machine tag tree see [my blog's search engine](http://tagaholic.me/blog.html) or a [flickr
+app](http://tagaholic.me/apps/flickr.html). A post about this plugin is
 [here](http://tagaholic.me/2009/04/14/i-am-machine-tag-and-so-can-you.html).
 
 Setup

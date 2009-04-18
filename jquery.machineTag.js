@@ -7,7 +7,7 @@
     if (locationMachineTag() != null) {
       $.machineTagSearch(locationMachineTag().pop(), options);
     }
-  };
+  }
   
   // Returns machine-tagged records/items that match wildcard machine tag.
   // These options have a global default with $.machineTagSearch.defaultOptions
@@ -36,7 +36,7 @@
       });
     }
     return matching_records;
-  };
+  }
 
   function machineTagSearchBody(wildcard_machine_tag, records, options) {
     var matching_records = machineTagSearchRecords(wildcard_machine_tag, records);
@@ -44,7 +44,7 @@
     if (options.displayCallback) options.displayCallback.call(this, wildcard_machine_tag, matching_records);
     location.href = location.href.replace(/#(.*?)$/, '') + "#" + wildcard_machine_tag;
     return matching_records;
-  };
+  }
 
   $.machineTagSearch.defaultOptions = {};
   
@@ -60,20 +60,20 @@
     });
     machine_tags.sort();
     return machine_tags;
-  };
+  }
 
   // Parses machine tag into its and returns namespace, predicate and value as object attributes.
   $.machineTag = function(machine_tag) {
     var fields = machine_tag.split(/[:=]/);
     return {namespace: fields[0], predicate: fields[1], value: fields[2]};
-  };
+  }
 
   $.machineTag.predicate_delimiter = ':';
   $.machineTag.value_delimiter = '=';
 
   $.machineTag.any = function(array, callback) {
     return $($.grep(array, callback)).size() > 0
-  };
+  }
   
   $.fn.hideMachineTags = function() {    
     return this.each( function(){
@@ -82,28 +82,28 @@
         mtag.namespace +$.machineTag.predicate_delimiter +mtag.predicate +
         $.machineTag.value_delimiter + "</span>" + mtag.value);
     });
-  };
+  }
   
   $.toggleHiddenMachineTags = function() {
     $(".machine_tag_prefix").toggle();
-  };
+  }
   
   //private methods
   function anyMachineTagsMatchWildcard(machine_tags, wildcard_machine_tag) {
     return $.machineTag.any(machine_tags, function(e) {return machineTagMatchesWildcard(e, wildcard_machine_tag)});  
-  };
+  }
 
   function machineTagMatchesWildcard(machine_tag, wildcard_machine_tag) {
    return !! machine_tag.match(wildcard_machine_tag.replace(/\*/g, '.*')) 
-  };
+  }
 
   function machineTagSearchRecords(wildcard_machine_tag, records) {
     return $.grep(records, function(e) {
       return anyMachineTagsMatchWildcard(e.tags, wildcard_machine_tag);
     });
-  };
+  }
 
   function locationMachineTag() {
     return location.href.match(/#(.*?)$/);
-  };
+  }
 })(jQuery);
