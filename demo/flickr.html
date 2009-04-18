@@ -18,18 +18,12 @@
 <p>
 <b>Instructions:</b>
 <span style="font-style: italic" id="instructions">
-  To use this machine tag tree you need a flickr user id. You can use <a
-    href="javascript:(function(){location.href="http://tagaholic.me/apps/flickr.html?user_id="+photostream_owner_nsid})()">this
-    bookmarklet</a> on a Flickr photostream  (<a href="http://www.flickr.com/photos/licciardi/">for
-    example</a>) or group pool to have it automatically filled for you. You can also get one with a
-  user name from <a href="http://idgettr.com/">idgettr</a>. Some user ids you can try: <a
-    href="javascript:void($('#flickr_user_id').val('33047461@N05'))">33047461@N05</a> (musicians)
-  and <a href="javascript:void($('#flickr_user_id').val('53755594@N00'))">53755594@N00</a> (places).
+  To use this <a href="http://tagaholic.me/2009/04/14/i-am-machine-tag-and-so-can-you.html#machine_tag_tree">machine tag tree</a> you need a flickr user id of someone who actively machine tags their photos. You can use <a href="javascript:(function(){location.href='http://tagaholic.me/apps/flickr.html?user_id='+photostream_owner_nsid})()">this bookmarklet</a> on a Flickr user's home page (<a href="http://www.flickr.com/photos/licciardi/">for example</a>) to have it automatically filled for you. You can also <a href='http://idgettr.com'>get one for a given user name</a>. Some user ids you can try: <a href="javascript:void($('#flickr_user_id').val('33047461@N05'))">33047461@N05</a> (musicbrainz/wikipedia), <a href="javascript:void($('#flickr_user_id').val('38211171@N00'))"> 38211171@N00</a> (astronomy) and <a href="javascript:void($('#flickr_user_id').val('53755594@N00'))">53755594@N00</a> (address/geo).
 </span>
 </p>
 
 <form action="javascript:void(flickrMachineTagSearch())">
-  <label>Flickr User Id: </label><input type="text" id="flickr_user_id" size="15"/><br/>
+  <label>Flickr User Id: </label><input type="text" id="flickr_user_id" size="15"/>
   <label>Machine Tag: </label><input type="text" name="machine_tag" id="machine_tag_query"/>
   <input value="Machine Tag Search" type="submit"/>
   <span id="machine_tag_search_status" style="display:none"> Searching ...</span>
