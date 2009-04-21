@@ -19,8 +19,9 @@
   //   * beforeJsonSearch: callback to manipulate json before it's searched, called after beforeSearch
   //   * afterSearch: after search callback i.e. to hide a spinner
   //   * displayCallback: display callback is passed wildcard machine tag + matching records
+  //   * appendHash: appends hash and wildcard machine tag to url, default is true
   $.machineTagSearch = function(wildcard_machine_tag, options) {
-    var options = $.extend({cacheJson: true}, $.machineTagSearch.defaultOptions, options || {});
+    var options = $.extend({cacheJson: true, appendHash: true}, $.machineTagSearch.defaultOptions, options || {});
     if (options.beforeSearch) options.beforeSearch.call(this);
     if (options.records) {
       var matching_records = machineTagSearchBody(wildcard_machine_tag, options.records, options);
@@ -42,7 +43,7 @@
     var matching_records = machineTagSearchRecords(wildcard_machine_tag, records);
     if (options.afterSearch) options.afterSearch.call(this);
     if (options.displayCallback) options.displayCallback.call(this, wildcard_machine_tag, matching_records);
-    location.href = location.href.replace(/#(.*?)$/, '') + "#" + wildcard_machine_tag;
+    if (options.appendHash) location.href = location.href.replace(/#(.*?)$/, '') + "#" + wildcard_machine_tag;
     return matching_records;
   }
 
