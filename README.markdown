@@ -3,7 +3,8 @@ Description
 These jQuery plugins provides machine-tag related methods, most importantly a machine
 tag search and a machine tag tree. For an introduction to machine tags, [read
 this](http://tagaholic.me/2009/03/26/what-are-machine-tags.html). To see a live version of a
-machine tag tree see [my blog's search engine](http://tagaholic.me/blog.html) or a [flickr
+machine tag tree see [my blog's search engine](http://tagaholic.me/blog.html), [a delicious
+app](http://tagaholic.me/apps/delicious.html) or a [flickr
 app](http://tagaholic.me/apps/flickr.html). A post about this plugin is
 [here](http://tagaholic.me/2009/04/14/i-am-machine-tag-and-so-can-you.html).
 
@@ -68,12 +69,12 @@ jquery.machineTagTree.js provides the following methods:
 
 Demo
 ====
-The plugin comes with two demos, demo/index.html and demo/flickr.html. The first uses a
-local json while the latter uses a flickr json feed. The demos uses both jquery plugins to display a machine tag tree. To try the demos:
+The plugin comes with three demos: demo/index.html, demo/delicious.html and demo/flickr.html. The first uses a
+local json while the latter two use a flickr json feed. The demos uses both jquery plugins to display a machine tag tree. To try the demos:
 
 1. Be online since it uses google's jquery library.
-2. Copy jquery.machineTag.js and jquery.machineTagTree.js to demo/javascripts
-3. Open either demo/index.html or demo/flickr.html in your browser.
+2. Copy jquery.machineTag.js and jquery.machineTagTree.js to demo/javascripts/
+3. Open any of the demo pages in your browser.
 
 License
 =======

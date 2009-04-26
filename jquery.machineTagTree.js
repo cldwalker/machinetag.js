@@ -31,7 +31,8 @@
   //   * machine tags: displays machine tags that match wildcard and are the parent nodes in the tree
   //   * record: displays record info, leaf nodes in a tree
   //   * record tags: displays a record's machine tags
-  // If your records don't use the url attribute as the primary attribute, you can customize your output with the formatter option.
+  // Records are expected to have a url attribute and an optional title attribute.
+  // If your records don't, customize your output with the formatter option.
   // This function takes the following options:
   //   * recordName: capitalized name to give the records, defaults to Records
   //   * tagTreeId: css id for the div containing the generated table, defaults to tag_tree
@@ -124,8 +125,8 @@
   }
 
   function recordTagsColumnFormatter(record) {
-    return $.map(record.tags, function(f) {
-      return "<a class='machine_tag_href_search toggle_machine_tags' href='#"+ f+"'>" + f + "</a>";
+    return $.map(record.tags, function(tag) {
+      return (tag.match($.machineTag.regexp)) ? ("<a class='machine_tag_href_search toggle_machine_tags' href='#"+ tag+"'>"+tag+"</a>") : tag;
     }).join(', ');
   }
 

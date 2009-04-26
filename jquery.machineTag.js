@@ -9,8 +9,9 @@
     }
   }
   
-  // Returns machine-tagged records/items that match wildcard machine tag.
-  // These options have a global default with $.machineTagSearch.defaultOptions
+  // Returns machine-tagged records/items that match wildcard machine tag. Machine-tag records are expected to have
+  // an attribute tags that contains a record's machine tags.
+  // To set defaults for this function's options use $.machineTagSearch.defaultOptions.
   // Options: Either records or jsonUrl is required.
   //   * cacheJson: cache records from first json call, default is true
   //   * records: an array of machine-tagged records
@@ -53,7 +54,7 @@
   $.machineTagSearchRecordTags = function(wildcard_machine_tag, records) {
     var machine_tags = [];
     $.each(records, function(i,e) {
-      $.each(e.tags, function(j,f) {
+      $.each(onlyMachineTags(e.tags), function(j,f) {
         if (machineTagMatchesWildcard(f, wildcard_machine_tag) && ($.inArray(f, machine_tags) == -1)) {
           machine_tags.push(f);
         }
@@ -71,6 +72,7 @@
 
   $.machineTag.predicate_delimiter = ':';
   $.machineTag.value_delimiter = '=';
+  $.machineTag.regexp = /:.*=/;
 
   $.machineTag.any = function(array, callback) {
     return $($.grep(array, callback)).size() > 0
@@ -100,8 +102,12 @@
 
   function machineTagSearchRecords(wildcard_machine_tag, records) {
     return $.grep(records, function(e) {
-      return anyMachineTagsMatchWildcard(e.tags, wildcard_machine_tag);
+      return anyMachineTagsMatchWildcard(onlyMachineTags(e.tags), wildcard_machine_tag);
     });
+  }
+
+  function onlyMachineTags(tags) {
+    return $.grep(tags, function(tag) {return tag.match($.machineTag.regexp)});
   }
 
   function locationMachineTag() {
